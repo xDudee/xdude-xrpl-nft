@@ -197,7 +197,7 @@ async function main() {
 
         //Now that the wallet is funded, lets bundle up the files in IPFS
         // - Write Meta data to nft-content folder for IPFS wrap up
-        config.meta.framework = "https://github.com/calvincs/xrpl-nft-creater";
+        config.meta.framework = "https://github.com/calvincs/xrpl-nft-creator";
         await WriteMetaData(config.meta);
 
         // - Push nft-content files to IPFS w/ PIN, get CID value
