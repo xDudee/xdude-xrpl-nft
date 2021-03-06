@@ -1,0 +1,22 @@
+logging:
+  logPath: xrpl-nft-creater.log
+  logLevel: debug
+  maxSize: 5242880
+  maxFiles: 5
+  colorize: true
+
+ipfs:
+  repopath: ipfs-node
+
+xrp:
+  network: wss://s.altnet.rippletest.net
+
+settings:
+  contentPath: nft-content
+
+meta:
+  authorWallet: rfHmFePnp6P4sQV2g9L8cC6CZv1UNLScqy
+  authorName: Calvin Schultz
+  authorEmail: calvin@ventibean.com
+  twitterName: calcs9
+  authorSite: http://xmpl.cloud/
