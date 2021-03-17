@@ -48,7 +48,7 @@
   The meta.json file contains details linking the IPFS file contents to the NFT wallet and the creators/artists wallet.
   This is generated during the build process, and is re-built during each run.
   Example output:
-  `json
+  ```json
         {
             "author": {
                 "wallet": "X7ART2fww9nxR1xWxM9WjQzY3j3C7eVaquLorx4aMio6UL8",
@@ -88,7 +88,7 @@
             "framework": "https://github.com/calvincs/xrpl-nft-creator"
         }
 
-  `
+  ```
 
 #### Why use an XRP wallet?
  Here are a few reasons I believe XRP wallets are a great choice for NFTs
