@@ -45,7 +45,7 @@
   
 
   - This is also why the generated meta.json file is important. Any future display tool used to view the NFT can use this data as well to display the work.
-  - If you develope an amazin template to show off your NFT, please let us see it! Share on twitter and please tag me, would love to see it!
+  - If you develop an amazing template to show off your NFT, please let us see it! Share on twitter and please tag me, would love to see it!
 
 ### setup.yml
   The setup.yml file is well documented with comments
@@ -111,7 +111,7 @@
  - Multiple people can control/own a single asset via MultiSign
  - Wallets can be easily transferred between users by updating the Regular Signers Key
  - Adding a pointer from the XRP wallet to a decentralized data store aka IPFS is straight forward
- - XRP + IPFS allows an easily traceable path of ownership of an NTF and the original creator/artist
+ - XRP + IPFS allows an easily traceable path of ownership of an NFT and the original creator/artist
  - While a Wallet does require a 20 XRP funding minimum, future TXs are relatively inexpensive as compared to some other solutions
  - Having access to the Wallet allows for exciting features that are difficult to implement in a Token alone.
     - Some examples:
