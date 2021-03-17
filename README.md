@@ -12,13 +12,10 @@
 `node index.js`
 
  - Ensure you've configured the setup.yml
- - 
  - Follow along with the prompts
- - 
  - You can use Xumm w/ the QR codes to help add and send funds to your TEST wallets Ref Xumm for setup of Testnet
- - 
  - All interactions with the script, including QR codes are logged to the creation.log file
- - 
+
 
 ### nft-content folder
   Place all the content you want to include in your NFT in this directory.  
