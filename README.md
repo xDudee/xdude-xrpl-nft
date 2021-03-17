@@ -12,33 +12,49 @@
 `node index.js`
 
  - Ensure you've configured the setup.yml
+ - 
  - Follow along with the prompts
+ - 
  - You can use Xumm w/ the QR codes to help add and send funds to your TEST wallets Ref Xumm for setup of Testnet
+ - 
  - All interactions with the script, including QR codes are logged to the creation.log file
+ - 
 
 ### nft-content folder
   Place all the content you want to include in your NFT in this directory.  
+  
   All the contents will be packaged up and deployed over IPFS for you. 
+  
   The resulting CIDv1 hash will be added to the XRP wallet you designate it to as well.
+  
 
   - I removed the BigBuckBunny.mp4 from the GitRepo due to size, you can download it here: https://ipfs.io/ipfs/bafybeiccp7ikixrum3kizkbezqtvl4fylomiihdtg4pm2wyhojhsp3wdgu/BigBuckBunny.mp4
 
 
 ### template folder
   The script attempts to make a index.html file which is placed in the nft-content folder for you during build.
+  
   This index.html file is generated base on the setup.yml configuration.
+  
   You can have multiple templates in the directory, and update the setup.yml to use the template which best displays your content.
+  
   It is recommended your index.html file be as generic as possible, as adding to many libraries to your work may not work well in the future.
+  
   As an example, browsers which support jQuery x.0.0 may not support jQuery x.0.0 five + years from now.  
+  
   The template engine uses nunjucks, and gets its feed from the `config` variable used in the script.
+  
   You should preview the index.html file before publishing, the script allows you to do this, its a built in step.
+  
 
   - This is also why the generated meta.json file is important. Any future display tool used to view the NFT can use this data as well to display the work.
   - If you develope an amazin template to show off your NFT, please let us see it! Share on twitter and please tag me, would love to see it!
 
 ### setup.yml
   The setup.yml file is well documented with comments
+  
   Please validate all the settings in the setup.yml file before generating your content
+  
   The script will ask you multiple times to validate your given settings
     
  - Leaving some fields blank will result in the script asking you for said data, but best practice would be to pre-define said values
@@ -46,7 +62,9 @@
 
 ### meta.json
   The meta.json file contains details linking the IPFS file contents to the NFT wallet and the creators/artists wallet.
+  
   This is generated during the build process, and is re-built during each run.
+  
   Example output:
   ```json
         {
@@ -101,10 +119,15 @@
  - Having access to the Wallet allows for exciting features that are difficult to implement in a Token alone.
     - Some examples:
         Wallets can sign data
+        
         Wallets can receive and send payments
+        
         Wallets using Xumm can authenticate to other services ;-)
+        
         Hooks?
+        
         Xmpl.Cloud?
+        
 
 
 #### Example living on the XRP Ledger MainNet
