@@ -1,5 +1,5 @@
 {
-  "name": "xrpl-nft-creater",
+  "name": "xrpl-nft-creator",
   "version": "1.0.0",
   "description": "Proof Of Concept NFT token builder for the XRP ledger, not production ready, only an example for demonstration, testnet only",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/calvincs/xrpl-nft-creater.git"
+    "url": "git+https://github.com/calvincs/xrpl-nft-creator.git"
   },
   "keywords": [
     "nft",
@@ -18,17 +18,22 @@
   "author": "Calvin Schultz",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/calvincs/xrpl-nft-creater/issues"
+    "url": "https://github.com/calvincs/xrpl-nft-creator/issues"
   },
-  "homepage": "https://github.com/calvincs/xrpl-nft-creater#readme",
+  "homepage": "https://github.com/calvincs/xrpl-nft-creator#readme",
   "dependencies": {
     "cli-color": "^2.0.0",
-    "folder-hash": "^4.0.0",
     "ipfs-core": "^0.5.2",
+    "ipfs-only-hash": "^2.0.1",
+    "ipld-dag-pb": "^0.20.0",
     "js-yaml": "^4.0.0",
+    "nunjucks": "^3.2.3",
+    "open": "^8.0.2",
     "prompt-sync": "^4.2.0",
+    "qrcode-terminal": "^0.12.0",
     "ripple-lib": "^1.9.0",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "xrpl-tagged-address-codec": "^0.2.1"
   },
   "devDependencies": {
     "eslint": "^7.20.0",
