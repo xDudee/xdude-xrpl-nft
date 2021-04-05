@@ -1,0 +1,71 @@
+# nft specific settings
+settings:
+  # where is the nft content currently sitting, the path
+  contentFolder: content
+  # html template path to viewer.html (you can customize this)
+  templateFile: viewer.html
+  # html escape
+  tempateHtmlEscape: false
+  # build torrent file? (You will need to seed this content via a webseed)
+  makeTorrent: true
+  # webseed will use meta.webHostingURI value, include IPFS domains?
+  useIPFSWebSeed: true
+
+  # meta data that will be included w/ this nft on creation
+  # all the below detail will be displayed in a table in the html template for refrence
+  meta:
+    # Allow use of webseed / domain hosting for NFT content - Dynamic
+    webHostingURI: nft.xrpfs.com
+
+    # Allow the Wallet Domain Field to override the ILP pointer in the viewer if present
+    honorDynamicILPAddress: true
+    staticILPAddress: $ilp.uphold.com/ZQ9a44qFAxLk
+
+    # information about the author, where they can find other works you have to offer, etc.
+    author:
+      wallet: X7ART2fww9nxR1xWxM9WjQzY3j3C7eVaquLorx4aMio6UL8
+      name: Calvin
+      email: "calvin [@] example [.] com"
+      twitter: >-
+        @calcs9
+      website: http://some.example.com/
+      payId: example$example.com
+      bio: >-
+        Autodidact, driven by possibilities, passionate about Technology, Security, Personal Finance, Blockchain, Real Estate, Science
+
+        Dev: Python,JS,Go,Rust,Java,etc
+
+        Find me on Twitter @calcs9
+        
+    # details around this specific nfts contents
+    details:
+      title: "Sintel"
+      description: >-
+        Sintel, code-named Project Durian during production, is a 2010 computer-animated fantasy short film. It was the third Blender "open movie". It was produced by Ton Roosendaal, chairman of the Blender Foundation, written by Esther Wouda, directed by Colin Levy, at the time an artist at Pixar and art direction by David Revoy, who is known for Pepper&Carrot an open source webcomic series. 
+        
+
+        It was made at the Blender Institute, part of the Blender Foundation. 
+
+
+        The plot follows the character, Sintel, who is tracking down her pet Scales, a dragon. Just like the other Blender "open movies," the film was made using Blender, a free and open source software application for animation, created and supported by the Blender Foundation.
+
+        
+        Sintel is an open movie from the Blender Foundation licensed under the Creative Commons Attribution 3.0 license.
+
+      # provide a cover image for your work (in content folder)
+      cover: sintel.png
+
+      # provide a name of file to link to or other url in work
+      # best to use some content already in the NFT to keep everything together (in content folder)
+      link: sintel.mp4
+
+      # provide any legal information around the use of this nft.
+      legal:  >-
+        The works contained in this package are protected by U.S. and International copyright laws
+
+        Sintel is an open movie from the Blender Foundation 
+        
+        Licensed under the Creative Commons Attribution 3.0 license.
+
+
+

@@ -16,71 +16,37 @@ xrp:
   # wss://s.altnet.rippletest.net is the XRP testnet
   network: wss://s.altnet.rippletest.net
 
-# nft specific settings
-settings:
-  # where is the nft content currently sitting, the path
-  contentPath: nft-content
-  # html template path to index.html (you can customize this)
-  templatePath: template/example
-  # html escape
-  tempateHtmlEscape: false
 
-  # meta data that will be included w/ this nft on creation
-  # all the below detail will be displayed in a table in the html template for refrence
-  meta:
-    # information about the author, where they can find other works you have to offer, etc.
-    author:
-      wallet: X7ART2fww9nxR1xWxM9WjQzY3j3C7eVaquLorx4aMio6UL8
-      name: Calvin
-      email: "calvin [@] example [.] com"
-      twitter: >-
-        @calcs9 
-      website: http://some.example.com/
-      bio: >-
-        Autodidact, driven by possibilities, passionate about Technology, Security, Personal Finance, Blockchain, Real Estate, Science
+# deploy options
 
-        Dev: Python,JS,Go,Rust,Java,etc
+# - AWS s3 / Digitial Ocean Spaces
+# -> Its important to ensure your S3 / Spaces DNS matches your base webHostingURI: subdomain.example.com
+# -> Ensure your permissions are correct for uploading content!
 
-        Find me on Twitter @calcs9
-        
-    # details around this specific nfts contents
-    details:
-      title: "Big Buck Bunny"
-      description: >-
-        When Big Bucks day gets turned upside down by the loss of his favorite butterflies via some rotten rodents, he takes to the offensive to avenge his friends.
-        This is a short animated, comedic, and light-hearted movie that has stood the test of time.
-
-        Code-named "Project Peach" by the Blender Institute, the film was made using a free and open-source software application called Blender.
-        
-
-        This short film was released in 2008 under the Creative Commons Attribution 3.0 license.
-
-
-        This NFT is a distribution of that original work.  By releasing this work as an NFT, It's my hope to accomplish the following:
-
-        1) Preserve the work of this media on a decentralized platform
-
-        2) Bring awareness to XRPs ability to create NFTs on the ledger easily and efficiently
-
-        3) Show the benefits of having an XRP wallet as the NFT vs a "token"
-
-        4) Raise money for some great open source projects/foundations
-
-
-        Click the above floating BigBuckBunny to watch short film if you have an IPFS enabled browser.
-
-      # provide a cover image for your work
-      cover: bunny.png
-      # provide a name of file to link to or other url in work
-      # best to use some content already in the NFT to keep everything together
-      link: BigBuckBunny.mp4
-      # provide any legal information around the use of this nft.
-      legal:  >-
-        The works contained in this package are protected by U.S. and International copyright laws
-
-        Creative Commons Attribution 3.0 license
-
-        (c) copyright 2008, Blender Foundation / www.bigbuckbunny.org
+webbucket:
+  enabled: false
+  bucket: testing
+  endpoint: nyc3.digitaloceanspaces.com
+  accessKeyId: xxxxx
+  secretAccessKey: xxxxxx
+  # Timeout in minutes
+  timeout: 10
+  # Helps ensure large files have time to upload
+  # - before continuing in the script logic.
+  # - disable to allow sync uploading
+  disableSyncUpload: false
 
 
 
+# - Pinata Integration for AutoPinning
+# - Only requires PinByHash
+# https://pinata.cloud/
+pinatacloud:
+  enabled: false
+  accessKey: exxxxxxx
+  secretKey: 9xxxxxxx
+
+
+system:
+  exitEnabled: true
+  exitScriptTTL: 30 #Minutes

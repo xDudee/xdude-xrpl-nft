@@ -1,16 +1,20 @@
 <html lang="en">
     <head>
-        <title>XRP NFT: {{ settings.meta.details.title }}</title>
+        <title>XRP NFT: {{ meta.details.title }}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if meta.staticILPAddress %}
+        <meta name="monetization" content="{{ meta.staticILPAddress }}">
+    {% endif %}
     </head>
     <style>
         body,html {
             margin: 0;
             padding: 0;
             font-family: "Helvetica", sans-serif;
-            background: linear-gradient(-45deg, #d34d24, #ac1d54, #2e8fb3, #40b499);
+            background: linear-gradient(-45deg, rgb(0, 0, 0, .5),#031057, #580928, rgb(0, 0, 0, .5));
             background-size: 500% 500%;
             animation: gradient 60s ease infinite;
+            height: 100%;
         }
         @keyframes gradient {
             0% {
@@ -55,8 +59,11 @@
             -ms-box-sizing:border-box; 
         }
         #canvas {
-            min-height: 100%;
-            position: absolute;
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
         }
         #container {
             padding-top: 120px;
@@ -157,13 +164,14 @@
     </div>
     <div id="container">
         <div id="card">
-            <a href="{{ settings.meta.details.link }}"> 
-            <img src="{{ settings.meta.details.cover }}"/> </a>
+            <video controls src="{{ meta.details.link }}" poster="{{ meta.details.cover }}" width="620">
+                Sorry, your browser doesn't support embedded video :-(
+                <a href="{{ meta.details.link }}"><img src="{{ meta.details.cover }}"/>click here to play directly</a>
+            </video>
         </div>
         <div id="content">
-            <h1>{{ settings.meta.details.title }}</h1>
-            <p> {{ settings.meta.details.description | nl2br }}</p>
-            <p><a href="/meta.json">Click here to see meta.json data </a></p>
+            <h1>{{ meta.details.title }}</h1>
+            <p> {{ meta.details.description | nl2br }}</p>
             <table class="styled-table">
                 <thead>
                     <tr>
@@ -174,49 +182,73 @@
                 <tbody>
                     <tr>
                         <td>Author</td>
-                        <td>{{ settings.meta.author.name }}</td>
+                        <td>{{ meta.author.name }}</td>
                     </tr>
                     <tr>
                         <td>Author Wallet</td>
-                        <td>{{ settings.meta.author.wallet }}</td>
+                        <td>{{ meta.author.wallet }}</td>
                     </tr>
                     <tr>
                         <td>Author Email</td>
-                        <td>{{ settings.meta.author.email }}</td>
+                        <td>{{ meta.author.email }}</td>
                     </tr>
                     <tr>
                         <td>Author Twitter</td>
-                        <td>{{ settings.meta.author.twitter | nl2br }}</td>
+                        <td>{{ meta.author.twitter | nl2br }}</td>
                     </tr>
                     <tr>
                         <td>Author Website</td>
-                        <td>{{ settings.meta.author.website }}</td>
+                        <td>{{ meta.author.website }}</td>
                     </tr>
                     <tr>
                         <td>Author Bio</td>
-                        <td>{{ settings.meta.author.bio | nl2br }}</td>
+                        <td>{{ meta.author.bio | nl2br }}</td>
                     </tr>
+                    {% if meta.author.payId %}
+                    <tr>
+                        <td>Author PayString</td>
+                        <td>{{ meta.author.payId}}</td>
+                    </tr>
+                    {% endif %}
+                    {% if meta.staticILPAddress %}
+                    <tr>
+                        <td>Payment Pointer</td>
+                        <td>{{ meta.staticILPAddress }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if meta.honorDynamicILPAddress %}
+                    <tr>
+                        <td>Allow Dynamic Payment Pointer</td>
+                        <td>{{ meta.honorDynamicILPAddress }}</td>
+                    </tr>
+                    {% endif %}
                     <tr>
                         <td>Title</td>
-                        <td>{{ settings.meta.details.title }}</td>
+                        <td>{{ meta.details.title }}</td>
                     </tr>
                     <tr>
                         <td>Description</td>
-                        <td>{{ settings.meta.details.description | nl2br}}</td>
+                        <td>{{ meta.details.description | nl2br}}</td>
                     </tr>
                     <tr>
                         <td>NFT X Address</td>
-                        <td>{{ settings.meta.details.NFTWalletXAddress }}</td>
+                        <td>{{ meta.details.NFTWalletXAddress }}</td>
                     </tr>
                     <tr>
                         <td>NFT Classic Address</td>
-                        <td>{{ settings.meta.details.NFTWalletAddress }}</td>
+                        <td>{{ meta.details.NFTWalletAddress }}</td>
                     </tr>
+                    {% if meta.webHostingURI %}
+                    <tr>
+                        <td>WebSeed Base URI</td>
+                        <td>{{ meta.webHostingURI }}</td>
+                    </tr>
+                    {% endif %}
                     <tr>
                         <td>Legal Notice</td>
-                        <td>{{ settings.meta.details.legal | nl2br}}</td>
+                        <td>{{ meta.details.legal | nl2br}}</td>
                     </tr>
-                    {% asyncEach obj in settings.meta.hashes %}
+                    {% asyncEach obj in meta.hashes %}
                         <tr>
                             <td>{{ obj.file }}</td>
                             <td>SHA256: {{ obj.sha256 }} <br/>CID: {{ obj.cid }}</td>
@@ -224,17 +256,28 @@
                     {% endeach %}
                     <tr>
                         <td>Created at</td>
-                        <td>{{ settings.meta.created }}</td>
+                        <td>{{ meta.created }}</td>
                     </tr>
                     <tr>
                         <td>NFT Builder</td>
-                        <td>{{ settings.meta.framework }}</td>
+                        <td>{{ meta.framework }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
     <script>
+        //Stop video moving on play
+        const video = document.querySelector('video');
+        video.addEventListener('play', (event) => {
+            document.getElementById("card").getAnimations()[0].pause();
+        });
+        //Start video moving on pause
+        video.addEventListener('pause', (event) => {
+            document.getElementById("card").getAnimations()[0].play();
+        });
+
+        //Floaters
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext("2d");
         canvas.width = window.innerWidth;
@@ -275,5 +318,4 @@
             particles.push(new Particle());
         loop();
     </script>
-    <!--UjI4Z1ptOXlkR2dnWVc1a0lFSjFhV3hrSUdkeVpXRjBJSFJvYVc1bmN5RT0=-->
 </html>

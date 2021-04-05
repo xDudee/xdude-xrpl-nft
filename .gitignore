@@ -102,3 +102,10 @@ dist
 
 # TernJS port file
 .tern-port
+
+
+#Other
+package-lock.json
+ipfs-node/*
+# CIDv0 QmNT6isqrhH6LZWg8NeXQYTD9wPjJo2BHHzyezpf9BdHbD File location
+nft-content/BigBuckBunny.mp4
