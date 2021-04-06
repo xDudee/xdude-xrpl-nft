@@ -24,39 +24,34 @@
 
 ### input folder
   Place all the content you want to include in your NFT in this directory.
-  - These folders will be the templates for your projects build
+  - These folders will serve as the templates for your projects build
   - They should contain the following folders/files (See included examples) in your main project folder
    1. content  -> this is all the data you want to package
    2. make.yml -> this is the instructions used to make your package
-   3. viewer.html -> this is the html template that's populated during the creation
+   3. viewer.html -> this is the html template that's populated during the build
   
-  - I removed the bunny.mp4 from the GitRepo due to size, you can download it here: 
-  - I removed the sintel.mp4 from the GitRepo due to size, you can download it here: 
+  - I removed bunny.mp4 & sintel.mp4 from the GitRepo due to size, check the readme.md in each project folder for the IPFS hash for download.
 
-  This index.html file is generated base on the make.yml & view.html files located in your project folder.
+  This index.html file is generated base on the make.yml & view.html files
   
-  It is recommended your view.html file be as generic as possible, as adding to many libraries to your work may not work well in the future.
+  It is recommended your viewer.html file be as generic as possible, as adding to many js libraries to your work may not work well in the future.
   
-  As an example, browsers which support jQuery x.0.0 may not support jQuery x.0.0 five + years from now.  
-  
-  The template engine uses nunjucks, and gets its feed from the `config` variable used in the script.
+  As an example, browsers which support jQuery x.0.0 may not support jQuery x.0.0 in the future.  
   
   You should preview the index.html file before publishing, and the script allows you to do this, its a built-in step.
   
-  - This is also why the generated meta.json file is essential. Any future display tool used to view the NFT can use this data to display the work.
   - If you develop a fantastic template to show off your NFT, please let us see it! Share on Twitter and please tag me. I would love to see it!
 
 
 ### ouput folder
   Your generated content will be located in this folder.
   Some important notes here:
-  1.  You will need to seed the Torrent.  It is assumed your using IPFS as your primary seeding source.  If you don't want to do this, you can remove the torrent file from the output directory and re-create your torrent file based on the contents of the folder.  The hash SHOULD be exactly the same despite keeping it compatible.
-  2.  If you need to re-populate IPFS with your data, remove the .torrent file from the output directory.  Then proceed to add the entire built folder into IPFS.  The hash SHOULD be the exactly the same despite, keeping it compatible.
-  3.  If you want to use WebTorrents, you NEED to seed the Torrent via a compatible WRTC enabled client, like WebTorrent Desktop client.  You can validate the WebTorrent is working by placing the magnet url into https://instant.io to validate.
-  4.  Using an external pinning service will greatly improve the performance of the availability of your content, its up to you to ensure your content is as available as possible.
-  5.  I recommend the use of Digital Ocean spaces to helping ensure your content is easily accessible.
+  1.  You will need to seed the Torrent after the build completes.  It is assumed your using IPFS as your primary seeding source.
+  2.  If you need to re-distribute your IPFS data, remove the .torrent file from the output directory.  Then proceed to add the entire built folder into IPFS.  The hash SHOULD be exactly the same keeping it compatible with whats already been built/set in the XRP wallet.
+  3.  If you want to use WebTorrents, you NEED to seed the Torrent via a compatible WRTC enabled client, like WebTorrent Desktop client.  You can validate the WebTorrent is working by testing the magnet url on https://instant.io.
+  4.  Using an external pinning service will greatly improve the availability of your packaged content.
+  5.  I recommend the use of DigitalOcean Spaces to helping ensure your content is easily accessible.
   6.  On first creation, your content may take some time to propagate!
-
 
 
 ### make.yml and setup.yml files
@@ -64,51 +59,45 @@
   
   Please validate all the settings in the yml files before generating your content.
   
-  The script will ask you multiple times to validate your given settings.
+  The script will ask you multiple times to validate the configured settings.
 
-  - make.yml is located in your project folder, specifically for that given project build
-  - setup.yml is located in the main script folder, used for all builds
+  - make.yml is located in your input project folder, for each project build
+  - setup.yml is located in the main script folder, used for all project builds
 
 
 ### make.yml
- - settings.contentFolder : the folder in the project folder you want to package (default of 'content')
- - settings.templateFile : the file you want to use as an HTML template to build viewer of the NFT content (default viewer.html)
- - settings.tempateHtmlEscape : should we escape any html found in the configuration file? (default false)
- - settings.makeTorrent : should we create a .torrent package from the content?  (default true)
- - settings.useIPFSWebSeed : if we build a torrent file, should we include IPFS webseeds? (default true) 
-
- - settings.meta.webHostingURI : this is the BASE url all your nft content will be located at: ex https://nft.xrpfs.com/buckbunny1617650420008/ is the contents of your hosted nft, and https://nft.xrpfs.com/ is the base
-
-
- - settings.meta.honorDynamicILPAddress : this tells the viewer of the meta to honor the ILP address in the XRP wallet Domain field IF found over the preset ILP value IF given.
-
-
- - settings.meta.staticILPAddress : this is the payment pointer given during the build, that is included in the html viewer page.  Viewing of content should honor this value, unless otherwise stated.
-
+ - settings.contentFolder : the project folder you want to package (default of 'content')
+ - settings.templateFile : the file you want to use as an HTML template to build the index.html file (default viewer.html)
+ - settings.tempateHtmlEscape : should we escape any html found in the make.yml configuration file? (default false)
+ - settings.makeTorrent : should we create a .torrent package from the output content?  (default true)
+ - settings.useIPFSWebSeed : if we build a torrent, should we include IPFS webseeds? (default true) 
+ - settings.meta.webHostingURI : this is the BASE url were all your nft content will be located at: ex https://nft.xrpfs.com/buckbunny1617650420008/ is the contents NFT, and https://nft.xrpfs.com/ is the base url.
+ - settings.meta.honorDynamicILPAddress : this tells the viewer of the meta.json code to honor the ILP address in the XRP wallet Domain field IF found over the preset ILP value, IF configured.
+ - settings.meta.staticILPAddress : this is the payment pointer given during the build, that is included in the index.html page.
  - settings.meta.author {} : infomation about the author.
  - settings.meta.details {} : information on the packaged content.
 
 
 ### setup.yml
  - webbucket
-    Allows user to upload NFT content to the online storage system (Amazon S3 / DigitalOcean Spaces)
+    Allows user to upload NFT content to an online storage system (Amazon S3 / DigitalOcean Spaces)
 
-    timeout : how long to wait before timeout of connection.  (default 10 minutes)
+    timeout : how long to wait before timeout of connection for uploads.  (default 10 minutes)
 
-    disableSyncUpload: if you have a large file, the script will wait for the content to upload to ensure it completes before the end of the script.  If the file(s) are large, this can take some time.  You can make this activity async by disabling it.  (default false)
+    disableSyncUpload: if you have a large file, the script will wait for the content to upload to ensure it completes before the end of the script.  If the file(s) are large, this can take some time.  You can make this activity Async by disabling the auto Sync nature of large file uploads.  (default false)
 
  -  pinatacloud
-    Allows user to pin hash on creation to Pinata Cloud.  This can take some time to propagate, so I recommend local pinning to IPFS desktop to ensure remote pinning completes.
+    Allows user to pin a hash on build creation to Pinata Cloud.  This can take some time to propagate, so I recommend local pinning to IPFS desktop to ensure remote pinning completes.
 
 - system
-    Generic system-related things.  At this point allows you to exit the script after a set period.
-    Enabled by default to exitEnabled: true and will exit after 30 minutes
+    Generic system-related things. Allows you to exit the script after a set period of time.
+    Enabled by default to exitEnabled: true and will exit the script after 30 minutes
 
 
 ### meta.json
   The meta.json file contains details linking the IPFS file contents to the NFT wallet and the creators/artists wallet.
   
-  This is generated during the build process and is re-built during each run.
+  This is generated during the build process.
   
   Example output:
   ```json
