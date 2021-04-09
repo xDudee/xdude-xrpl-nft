@@ -531,7 +531,7 @@ async function BuildDomainPointer(serviceID, resources) {
   /* 
       Example
 
-      xnft::
+      @xnft:
       btih:1e3ec2d9d231b7dbe0b0ba2db911cb97eadd40bb
       ipfs:Qmct4KDxLbpXTgpKPXYv6enj4yRBCNkxtfAEWP9jFqLtkW
       ilpd:$ilp.uphold.com/ZQ9a44qFAxLk
@@ -541,7 +541,7 @@ async function BuildDomainPointer(serviceID, resources) {
 
       OR
 
-      xnft::meta.json
+      @xnft:meta.json
       btih:1e3ec2d9d231b7dbe0b0ba2db911cb97eadd40bb
       ipfs:Qmct4KDxLbpXTgpKPXYv6enj4yRBCNkxtfAEWP9jFqLtkW
       ilpd:$ilp.uphold.com/ZQ9a44qFAxLk
@@ -551,7 +551,7 @@ async function BuildDomainPointer(serviceID, resources) {
 
       -------------------------------------------------------------------------------------------------------------
 
-      [xnft]:: <- Defines this group of resources is a XRP NFT resource group | meta.json <- additional data (opt.)
+      @[xnft]: <- Defines this group of resources is a XRP NFT resource group | meta.json <- additional data (opt.)
       [btih]:[Torrent Hash Address]
       [ipfs]:[IPFS Data]
       [ilpd]:[Dynamic ILP pointer, overrides defined meta pointer data]
@@ -571,7 +571,7 @@ async function BuildDomainPointer(serviceID, resources) {
   try {
     //Build the domain value out, start with Service ID value
     let domainValue = "";
-    domainValue += serviceID.toLowerCase() + "::\n";
+    domainValue +=  + `@${serviceID.toLowerCase()}:\n`;
 
     //Add the protos and resources
     // - Add size validation here, add as much as possible, then warn on failed additions / rev2
