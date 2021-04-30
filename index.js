@@ -226,19 +226,20 @@ async function UploadBuildFilesIPFS(configSettings) {
             cidVersion: 0, //Reverted back to v0 to save space in Domain field
             timeout: 300000
         };
-        let rootCID = "";
-        let includeHead = configSettings.buildDestFolder.split(path.sep).pop();
+        let rootFolderCID = "";
+        //let includeHead = configSettings.buildDestFolder.split(path.sep).pop();
         for await (const file of iAPI.addAll(globSource(configSettings.buildDestFolder, globSourceOptions), addOptions)) {
             logs.info(`pushing content files: ${file.path} :: ${file.size} :: ${file.cid}`);
-            if (file.path == includeHead){
-                rootCID = file;
+            if (!file.path || file.path === "") {
+              rootFolderCID = file;
             }
         }
 
         //Sanity check
-        if (rootCID === "") {throw Error("invalid cid returned, empty string")}
+        if (rootFolderCID === "") {throw Error("invalid cid returned, empty string")}
 
-        return rootCID
+        return rootFolderCID
+        
     } catch (error) {
         CatchError(error)
     }
@@ -486,6 +487,7 @@ async function BuildTorrentTracker(configSettings) {
         torrentOptions.urlList.push(`https://gateway.ipfs.io/ipfs/${configSettings.ipfsAddress}/`)
         torrentOptions.urlList.push(`https://${cidv1}.ipfs.dweb.link/`) //Requires v1
         torrentOptions.urlList.push(`https://ipfs.io/ipfs/${configSettings.ipfsAddress}/`)
+        torrentOptions.urlList.push(`http://${cidv1}.ipfs.localhost:8080/`) //If your running a local IPFS node, will help pull files faster
         logs.info(`added IPFS urls to torrent webseed profile: ${JSON.stringify(torrentOptions.urlList, null, 2)}`)
       }
 
@@ -527,7 +529,7 @@ async function BuildTorrentTracker(configSettings) {
 
 
 // Build Domain Field Pointer information
-async function BuildDomainPointer(serviceID, resources) {
+async function BuildDomainPointer(resources) {
   /* 
       Example
 
@@ -563,16 +565,14 @@ async function BuildDomainPointer(serviceID, resources) {
       Must be less then 256 Chars / bytes
       NewLine sep
 
-      serviceID -> String
       resources -> k/v Obj {"protocol" : "resource address / instruction", "protocol" : "resource address / instruction", ...}
       Max 256 data, will fail if over!
 
   */
   try {
-    //Build the domain value out, start with Service ID value
+    //Build the domain value out
     let domainValue = "";
-    domainValue +=  + `@${serviceID.toLowerCase()}:\n`;
-
+    domainValue += "@xnft:\n";
     //Add the protos and resources
     // - Add size validation here, add as much as possible, then warn on failed additions / rev2
     Object.entries(resources).forEach(([key, value]) => {
@@ -709,12 +709,13 @@ async function main() {
         // - Push content build files to IPFS w/ PIN, get CID value
         let online = await iAPI.isOnline();
         logs.info(`IPFS Online status: ${online}`);
-        let rootCID = await UploadBuildFilesIPFS(buildSettings);
-        let rootString = rootCID.cid.toString();
+        let cidData = await UploadBuildFilesIPFS(buildSettings);
 
-        let rootStringURL = `ipfs://${rootString}/`;
-        buildSettings.ipfsAddress = rootString;
-        logs.info(`(IPFS) content root string recorded as: ${rootStringURL}`);
+        let baseString = cidData.cid.toString();
+
+        let baseStringURL = `ipfs://${baseString}/`;
+        buildSettings.ipfsAddress = baseString;
+        logs.info(`(IPFS) content base string recorded as: ${baseStringURL}`);
         
         /*
           We should start to pin before we build torrent
@@ -753,11 +754,11 @@ async function main() {
         // - Build the Domain Resource Pointer
         let resources = {}
         if (btHash) { resources.bith = btHash}
-        if (rootString) {resources.ipfs = rootString}
+        if (baseString) {resources.ipfs = baseString}
         if (buildSettings.meta.webHostingURI) {resources.http = buildSettings.meta.webHostingURI}
         if (buildSettings.meta.staticILPAddress) {resources.ilpd = buildSettings.meta.staticILPAddress}
         // - Build it
-        let xrpDomainField = await BuildDomainPointer("xnft", resources)
+        let xrpDomainField = await BuildDomainPointer(resources)
         logs.info(`Attempting to set ${address.address} Domain field with resource settings...`)
         // Write the data to the NFT Wallet
         await updateXRPWalletData({"Domain": xrpDomainField}, address)
@@ -765,11 +766,12 @@ async function main() {
         // IPFS Hosting
         // You should pin this remotely, display some messages for user
         logs.info("Content is best viewed with an IPFS enabled browser, like Brave Browser: https://brave.com/")
-        logs.info(`Validate your NFT data is live (IPFS): ${rootStringURL}`)
-        logs.info(`Validate your NFT data is live: https://gateway.ipfs.io/ipfs/${rootString} `)
+        logs.info(`Validate your NFT data is live (IPFS)(Base Dir): ${baseStringURL}`)
+        logs.info(`Validate your NFT base folder is live: https://gateway.ipfs.io/ipfs/${baseString} `)
         logs.info()
         logs.warn('Your data is being served from this temp IPFS node currently')
         logs.info('Note: You can use IPFS desktop to pin this content over IPFS after thie script ends')
+        logs.info('YOU MUST PIN the base directory CID')
         logs.info(' - If you do this however, ensure the .torrent file is removed BEFORE you upload the folder and pin')
         logs.info(' - validate the IPFS CID after the folder upload on IPFS desktop to ensure it matches')
         if (config.pinatacloud.enabled) {
